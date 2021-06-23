@@ -43,6 +43,8 @@ function createCard (movies) {
         let confirmMsg = confirm(`ท่านต้องการเพิ่มเรื่อง ${movies.title} ใช่หรือไม่`)
             if (confirmMsg) {
                 addToList(movies)
+                hideAll()
+                getListFromDB() 
             }
     })
     button.setAttribute('style', 'background-color: #CC5A1C; border: #CC5A1C;')
@@ -86,3 +88,71 @@ function addListToDB(results) {
         console.log('อัปเดตข้อมูลสำเร็จ')
     })
 }
+
+function getListFromDB() {
+    fetch(`https://se104-project-backend.du.r.appspot.com/movies/632110343`)
+	.then((response) => {
+		return response.json()
+	}).then((data) => { 
+		getMyList(data)
+	})
+}
+
+function getMyList(data) {
+    myList.innerHTML = ''
+    for (movies of data) {
+        createCardMyList (movies)
+    }
+}
+
+function createCardMyList(movies) {
+    const myList = document.getElementById('myList')
+    let card = document.createElement('div')
+    card.classList.add('card')
+    card.setAttribute('style', 'width : 18rem')
+    let img = document.createElement('img')
+    img.classList.add('card-img-top')
+    img.setAttribute('src', movies.image_url)
+    let cardBody = document.createElement('div')
+    cardBody.classList.add('card-body')
+    let cardTitle = document.createElement('h5')
+    cardTitle.classList.add('card-title')
+    cardTitle.innerHTML = movies.title
+    let cardEpisodes = document.createElement('p')
+    cardEpisodes.classList.add('card-episodes')
+    cardEpisodes.innerHTML = 'Episodes: ' + movies.episodes
+    let cardScore = document.createElement('p')
+    cardScore.classList.add('card-score')
+    cardScore.innerHTML = 'Score: ' + movies.score
+    let button = document.createElement('button')
+    button.classList.add('btn')
+    button.classList.add('btn-primary')
+    button.setAttribute('type','button')
+    button.addEventListener('click', (event) => {
+        
+    })
+    button.setAttribute('style', 'background-color: #CC5A1C; border: #CC5A1C;')
+    button.innerText ='Add to List'
+    cardBody.appendChild(cardTitle)
+    cardBody.appendChild(cardEpisodes)
+    cardBody.appendChild(cardScore)
+    cardBody.appendChild(button)
+    card.appendChild(img)
+    card.appendChild(cardBody)
+    myList.appendChild(card)
+}
+
+function hideAll() {
+    const output = document.getElementById('output')
+    output.style.display = 'none'
+}
+
+document.getElementById('homeMenu').addEventListener('click', (event) => {
+    location.reload()
+})
+
+document.getElementById('myListMenu').addEventListener('click', (event) => {
+    hideAll()
+    getListFromDB()
+})
+
