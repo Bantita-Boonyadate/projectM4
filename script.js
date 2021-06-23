@@ -124,19 +124,31 @@ function createCardMyList(movies) {
     let cardScore = document.createElement('p')
     cardScore.classList.add('card-score')
     cardScore.innerHTML = 'Score: ' + movies.score
-    let button = document.createElement('button')
-    button.classList.add('btn')
-    button.classList.add('btn-primary')
-    button.setAttribute('type','button')
-    button.addEventListener('click', (event) => {
+    let cardButton = document.createElement('div')
+    cardButton.classList.add('cardButton')
+    let detailButton = document.createElement('button')
+    detailButton.classList.add('btn')
+    detailButton.classList.add('btn-primary')
+    detailButton.setAttribute('style', 'margin-right: 8px; background-color: #3E8F55; border: #3E8F55;')
+    detailButton.setAttribute('type','button')
+    detailButton.addEventListener('click', (event) => {
         
     })
-    button.setAttribute('style', 'background-color: #CC5A1C; border: #CC5A1C;')
-    button.innerText ='Add to List'
+    detailButton.innerText ='Details'
+    let deleteButton = document.createElement('button')
+    deleteButton.classList.add('btn')
+    deleteButton.classList.add('btn-danger')
+    deleteButton.setAttribute('type','button')
+    deleteButton.addEventListener('click', (event) => {
+        
+    })
+    deleteButton.innerText ='Delete'
     cardBody.appendChild(cardTitle)
     cardBody.appendChild(cardEpisodes)
     cardBody.appendChild(cardScore)
-    cardBody.appendChild(button)
+    cardButton.appendChild(detailButton)
+    cardButton.appendChild(deleteButton)
+    cardBody.appendChild(cardButton)
     card.appendChild(img)
     card.appendChild(cardBody)
     myList.appendChild(card)

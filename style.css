@@ -15,3 +15,7 @@ body {
     background-color: #541f80;
     color: white;
 }
+.cardButton {
+    display:  flex;
+    justify-content: flex-end;
+}
