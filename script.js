@@ -140,7 +140,10 @@ function createCardMyList(movies) {
     deleteButton.classList.add('btn-danger')
     deleteButton.setAttribute('type','button')
     deleteButton.addEventListener('click', (event) => {
-        
+        let confirmMsg = confirm(`ท่านต้องการลบ ${movies.title} ใช่หรือไม่`)
+            if (confirmMsg) {
+                 deleteMyList(movies.id)
+            }
     })
     deleteButton.innerText ='Delete'
     cardBody.appendChild(cardTitle)
@@ -160,11 +163,25 @@ function hideAll() {
 }
 
 document.getElementById('homeMenu').addEventListener('click', (event) => {
-    location.reload()
+    location.reload() //refresh หน้า home ใหม่ เวลากดที่ my list แล้วกลับมากดที่ home อีกครั้ง
 })
 
 document.getElementById('myListMenu').addEventListener('click', (event) => {
     hideAll()
     getListFromDB()
 })
+
+function deleteMyList(id) {
+    fetch(`https://se104-project-backend.du.r.appspot.com/movie?id=632110343&&movieId=${id}`, {
+        method: 'DELETE'
+    }).then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        }
+    }).then(data => { //data มาจากที่เรา fetchข้อมูลมาแล้วมาเก็บไว้ที่ตัว data
+        alert(`ภาพยนตร์เรื่อง ${data.title} ถูกลบสำเร็จแล้ว`)
+        myList.innerHTML = ''
+        getListFromDB()
+    })
+}
 
