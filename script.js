@@ -29,9 +29,6 @@ function createCard (movies) {
     let cardTitle = document.createElement('h5')
     cardTitle.classList.add('card-title')
     cardTitle.innerHTML = movies.title
-    // let cardText = document.createElement('p')
-    // cardText.classList.add('card-text')
-    // cardText.innerHTML = movies.synopsis
     let cardEpisodes = document.createElement('p')
     cardEpisodes.classList.add('card-episodes')
     cardEpisodes.innerHTML = 'Episodes: ' + movies.episodes
@@ -42,14 +39,50 @@ function createCard (movies) {
     button.classList.add('btn')
     button.classList.add('btn-primary')
     button.setAttribute('type','button')
+    button.addEventListener('dblclick', (event) => {
+        let confirmMsg = confirm(`ท่านต้องการเพิ่มเรื่อง ${movies.title} ใช่หรือไม่`)
+            if (confirmMsg) {
+                addToList(movies)
+            }
+    })
     button.setAttribute('style', 'background-color: #CC5A1C; border: #CC5A1C;')
     button.innerText ='Add to List'
     cardBody.appendChild(cardTitle)
-    // cardBody.appendChild(cardText)
     cardBody.appendChild(cardEpisodes)
     cardBody.appendChild(cardScore)
     cardBody.appendChild(button)
     card.appendChild(img)
     card.appendChild(cardBody)
     output.appendChild(card)
+}
+
+function addToList(movies) {
+    let results = {
+        id: "632110343",
+        movie: {
+            url: movies.url ,
+            image_url: movies.image_url ,
+            title: movies.title ,
+            synopsis: movies.synopsis ,
+            type: movies.type ,
+            episodes: movies.episodes ,
+            score: movies.score ,
+            rated: movies.rated
+        }
+    }
+    addListToDB(results)
+}
+
+function addListToDB(results) {
+    fetch('https://se104-project-backend.du.r.appspot.com/movies', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(results)
+    }) .then((response) => {
+        return response.json()
+    }).then(data => {
+        console.log('อัปเดตข้อมูลสำเร็จ')
+    })
 }
