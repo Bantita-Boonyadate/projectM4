@@ -1,0 +1,17 @@
+body {
+    background-color: #211B24;
+    box-sizing: border-box;
+}
+.logo {
+    width: 10rem;
+}
+.container-output {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.card {
+    margin: 30px;
+    background-color: #541f80;
+    color: white;
+}
