@@ -1,59 +1,105 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-  
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Movie</title>
-  </head>
-  <body>
-    <header class="p-3 bg-dark text-white">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="#" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-              <img src="image/movie-logo.png" class="logo">
-            </a>
-    
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a href="#" class="nav-link px-2 text-secondary" id="homeMenu">Home</a></li>
-              <li><a href="#" class="nav-link px-2 text-white" id="myListMenu">My list</a></li>
-            </ul>
-    
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-              <input type="search" class="form-control form-control-dark"
-              id="searchBox" placeholder="Search..." aria-label="Search">
-            </form>
-    
-            <div class="text-end">
-              <button type="button" class="btn btn-secondary" id="searchButton">Search</button>
-            </div>
-          </div>
+  <!-- Bootstrap CSS -->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Movie</title>
+</head>
+
+<body onload="onLoad()">
+  <header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="#" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <img src="image/movie-logo.png" class="logo">
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 text-white" id="homeMenu">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white" id="myListMenu">Favorite <svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="hotpink" class="bi bi-suit-heart-fill"
+                viewBox="0 0 16 16">
+                <path
+                  d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+              </svg></a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control form-control-dark" id="searchBox" placeholder="Search..."
+            aria-label="Search">
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary" id="searchButton">Search</button>
         </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
-     <div class="container-output" id="output">
+  <div class="container-fluid">
+    <div class="container-output" id="output">
 
-     </div>
+    </div>
 
-     <div class="container-myList" id="myList">
+    <div class="container-myList" id="myList">
 
-     </div>
+    </div>
 
+    <div class="container-detail" id="detail">
+      <div class="row">
+        <div class="col-3"><b>Image:</b></div>
+        <div class="col">
+          <img src="image/default.jpg" alt="default image" id="image_url">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3"><b>Title:</b></div>
+        <div class="col" id="title">title</div>
+      </div>
+      <div class="row">
+        <div class="col-3"><b>Synopsis:</b></div>
+        <div class="col" id="synopsis">synopsis</div>
+      </div>
+      <div class="row">
+        <div class="col-3"><b>Type:</b></div>
+        <div class="col" id="type">type</div>
+      </div>
+      <div class="row">
+        <div class="col-3"><b>Episodes:</b></div>
+        <div class="col" id="episodes">episodes</div>
+      </div>
+      <div class="row">
+        <div class="col-3"><b>Score:</b></div>
+        <div class="col" id="score">score</div>
+      </div>
+      <div class="row">
+        <div class="col-3"><b>Rated:</b></div>
+        <div class="col" id="rated">rated</div>
+      </div>
+      <button type="button" class="btn btn-primary" id="backButton">Back to list</button>
+    </div>
+  </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"></script>
     <script src="script.js" type="text/javascript"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     -->
-  </body>
+</body>
+
 </html>

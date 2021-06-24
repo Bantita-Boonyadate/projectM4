@@ -1,5 +1,5 @@
 body {
-    background-color: #211B24;
+    background-color: #191919;
     box-sizing: border-box;
 }
 .logo {
@@ -12,10 +12,46 @@ body {
 }
 .card {
     margin: 30px;
-    background-color: #541f80;
+    background-color: #3B444F;
     color: white;
 }
 .cardButton {
-    display:  flex;
-    justify-content: flex-end;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
+.cardButtonHome {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.container-detail{
+    color: white;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    width: 700px;
+    margin-top: 20px;
+}
+.container-detail.row{
+    display: flex;
+    justify-content: center;
+}
+.container-fluid{
+    display: flex;
+    justify-content: center;
+}
+.container-detail button{
+    margin-left: 15.7rem;
+    width: 110px;
+    margin-top: 2rem;
+}
+#searchButton{
+    background-color: #FFA325;
+    border: #FFA325;
+}
+#backButton{
+    background-color: hotpink;
+    border: hotpink;
+}
+

@@ -1,5 +1,12 @@
+function onLoad() {
+    hideAll()
+}
 document.getElementById('searchButton').addEventListener('click', (event) => {
-	let name = document.getElementById('searchBox').value
+    const output = document.getElementById('output')
+    output.style.display = 'flex'
+    const myList = document.getElementById('myList')
+    myList.innerHTML=''
+    let name = document.getElementById('searchBox').value
 	console.log(name)
 	fetch(`https://api.jikan.moe/v3/search/anime?q=${name}`)
 	.then((response) => {
@@ -24,6 +31,7 @@ function createCard (movies) {
     let img = document.createElement('img')
     img.classList.add('card-img-top')
     img.setAttribute('src', movies.image_url)
+    img.setAttribute('style', 'height: 25rem;')
     let cardBody = document.createElement('div')
     cardBody.classList.add('card-body')
     let cardTitle = document.createElement('h5')
@@ -35,24 +43,27 @@ function createCard (movies) {
     let cardScore = document.createElement('p')
     cardScore.classList.add('card-score')
     cardScore.innerHTML = 'Score: ' + movies.score
+    let cardButtonHome = document.createElement('div')
+    cardButtonHome.classList.add('cardButtonHome') 
     let button = document.createElement('button')
     button.classList.add('btn')
     button.classList.add('btn-primary')
     button.setAttribute('type','button')
     button.addEventListener('dblclick', (event) => {
-        let confirmMsg = confirm(`ท่านต้องการเพิ่มเรื่อง ${movies.title} ใช่หรือไม่`)
+        let confirmMsg = confirm(`ท่านต้องการเพิ่มภาพยนตร์เรื่อง ${movies.title} ใช่หรือไม่`)
             if (confirmMsg) {
                 addToList(movies)
                 hideAll()
                 getListFromDB() 
             }
     })
-    button.setAttribute('style', 'background-color: #CC5A1C; border: #CC5A1C;')
-    button.innerText ='Add to List'
+    button.setAttribute('style', 'background-color: #FF007E; border: #FF007E;')
+    button.innerText ='Add to Favorite'
     cardBody.appendChild(cardTitle)
     cardBody.appendChild(cardEpisodes)
     cardBody.appendChild(cardScore)
-    cardBody.appendChild(button)
+    cardButtonHome.appendChild(button)
+    cardBody.appendChild(cardButtonHome)
     card.appendChild(img)
     card.appendChild(cardBody)
     output.appendChild(card)
@@ -113,6 +124,7 @@ function createCardMyList(movies) {
     let img = document.createElement('img')
     img.classList.add('card-img-top')
     img.setAttribute('src', movies.image_url)
+    img.setAttribute('style', 'height: 25rem;')
     let cardBody = document.createElement('div')
     cardBody.classList.add('card-body')
     let cardTitle = document.createElement('h5')
@@ -131,8 +143,12 @@ function createCardMyList(movies) {
     detailButton.classList.add('btn-primary')
     detailButton.setAttribute('style', 'margin-right: 8px; background-color: #3E8F55; border: #3E8F55;')
     detailButton.setAttribute('type','button')
+    detailButton.setAttribute('id','detailButton')
     detailButton.addEventListener('click', (event) => {
-        
+        myList.innerHTML = ''
+        const detail = document.getElementById('detail')
+        detail.style.display = 'flex'
+        showOneDetail(movies.id)
     })
     detailButton.innerText ='Details'
     let deleteButton = document.createElement('button')
@@ -140,7 +156,7 @@ function createCardMyList(movies) {
     deleteButton.classList.add('btn-danger')
     deleteButton.setAttribute('type','button')
     deleteButton.addEventListener('click', (event) => {
-        let confirmMsg = confirm(`ท่านต้องการลบ ${movies.title} ใช่หรือไม่`)
+        let confirmMsg = confirm(`ท่านต้องการลบภาพยนตร์เรื่อง ${movies.title} ใช่หรือไม่`)
             if (confirmMsg) {
                  deleteMyList(movies.id)
             }
@@ -160,6 +176,8 @@ function createCardMyList(movies) {
 function hideAll() {
     const output = document.getElementById('output')
     output.style.display = 'none'
+    const detail = document.getElementById('detail')
+    detail.style.display = 'none'
 }
 
 document.getElementById('homeMenu').addEventListener('click', (event) => {
@@ -185,3 +203,23 @@ function deleteMyList(id) {
     })
 }
 
+function showOneDetail(id) {
+    fetch(`https://se104-project-backend.du.r.appspot.com/movie/632110343/${id}`, {
+        method: 'GET'
+    }).then((response) => {
+        if (response.status === 200) {
+            return response.json()
+        }
+    }).then(data => {
+       document.getElementById('image_url').src = data.image_url
+       document.getElementById('title').innerHTML = data.title
+       document.getElementById('synopsis').innerHTML = data.synopsis
+       document.getElementById('type').innerHTML = data.type
+       document.getElementById('episodes').innerHTML = data.episodes
+       document.getElementById('score').innerHTML = data.score
+       document.getElementById('rated').innerHTML = data.rated
+    })
+}
+document.getElementById('backButton').addEventListener('click',(e)=>{
+    document.getElementById('myListMenu').click()
+})
